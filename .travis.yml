@@ -1,0 +1,25 @@
+jdk: oraclejdk8
+
+language: java
+
+services:
+    - docker
+
+sudo: required
+
+before_install:
+    - 'if [ "$TRAVIS_EVENT_TYPE" = "push" ] && [ "$TRAVIS_BRANCH" != "master" ]; then
+          echo "Terminating build since there is also a pull request build running.";
+          travis_terminate 0;
+       fi'
+
+install:
+    - docker login --username ${DOCKER_USER} --password ${DOCKER_PWD}
+    - docker build . -t "${PWD##*/}"
+    - docker tag "${PWD##*/}" cgoncas/"${PWD##*/}"
+    - docker tag "${PWD##*/}" cgoncas/"${PWD##*/}":`date +%Y%m%d%H%M%S`
+
+script:
+    - 'if [ "$TRAVIS_EVENT_TYPE" = "push" ] && [ "$TRAVIS_BRANCH" = "master" ]; then
+           docker push cgoncas/"${PWD##*/}";
+       fi'
