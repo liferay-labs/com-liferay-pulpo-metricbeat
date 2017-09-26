@@ -44,6 +44,13 @@ metricbeat.modules:
             - attr: SystemCpuLoad
               field: cpu.system_load
 
+#------------------------------- Docker Module -------------------------------
+    - module: docker
+      metricsets: ["container", "cpu", "diskio", "healthcheck", "info", "memory", "network"]
+      hosts: ["unix:///var/run/docker.sock"]
+      enabled: true
+      period: 10s
+
 #================================ General ======================================
 
 tags: '${PULPO_METRICBEAT_TAGS}'
