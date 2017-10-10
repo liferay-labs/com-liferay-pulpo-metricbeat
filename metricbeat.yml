@@ -77,3 +77,8 @@ logging.to_syslog: false
 
 logging.files:
   keepfiles: 5
+
+#================================ Processors ===================================
+
+processors:
+  - add_cloud_metadata:
