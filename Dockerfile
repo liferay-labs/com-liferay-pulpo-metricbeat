@@ -1,4 +1,4 @@
-FROM docker.elastic.co/beats/metricbeat:5.5.2
+FROM docker.elastic.co/beats/metricbeat:6.2.2
 MAINTAINER Cristina González <cristina.gonzalez@liferay.com>
 
 COPY metricbeat.yml /usr/share/metricbeat/metricbeat.yml
