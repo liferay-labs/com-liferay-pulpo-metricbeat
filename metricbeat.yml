@@ -18,31 +18,15 @@ metricbeat.config.modules:
 
 #==========================  Modules configuration ============================
 metricbeat.modules:
-#------------------------------- Jolokia Module ------------------------------
-    - module: jolokia
-      metricsets: ["jmx"]
-      enabled: true
+#------------------------------- HTTP Module ------------------------------
+    - module: http
+      metricsets: ["json"]
       period: 10s
-      namespace: "metrics"
       hosts: '${PULPO_METRICBEAT_JOLOKIA_HOSTS}'
-      path: "/management/jolokia/?ignoreErrors=true&canonicalNaming=false"
-      jmx.mappings:
-        - mbean: 'java.lang:type=Runtime'
-          attributes:
-            - attr: Uptime
-              field: uptime
-        - mbean: 'java.lang:type=Memory'
-          attributes:
-            - attr: HeapMemoryUsage
-              field: memory.heap_usage
-            - attr: NonHeapMemoryUsage
-              field: memory.non_heap_usage
-        - mbean: 'java.lang:type=OperatingSystem'
-          attributes:
-            - attr: ProcessCpuLoad
-              field: cpu.process_load
-            - attr: SystemCpuLoad
-              field: cpu.system_load
+      username: '${PULPO_CONTACT_ENGINE_BASIC_AUTH_USER}'
+      password: '${PULPO_CONTACT_ENGINE_BASIC_AUTH_PASSWORD}'
+      namespace: "metrics"
+      path: "/management/metrics"
 
 #------------------------------- Docker Module -------------------------------
     - module: docker
@@ -72,8 +56,6 @@ output.console:
 logging.level: debug
 
 logging.to_files: true
-
-logging.to_syslog: false
 
 logging.files:
   keepfiles: 5
