@@ -27,6 +27,7 @@ metricbeat.modules:
       password: '${PULPO_CONTACT_ENGINE_BASIC_AUTH_PASSWORD}'
       namespace: "metrics"
       path: "/management/metrics"
+      ssl.verification_mode: none
 
 #------------------------------- Docker Module -------------------------------
     - module: docker
